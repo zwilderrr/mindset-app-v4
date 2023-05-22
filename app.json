@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "mindset-app-v4",
+    "slug": "mindset-app-v4",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zwilderrr.mindsetapp-v4",
+      "infoPlist": {
+        "CFBundleDisplayName": "Mindset",
+        "CFBundleName": "mindset-app-v4",
+        "ITSAppUsesNonExemptEncryption": "no"
+      },
+      "buildNumber": "3"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "owner": "zwilderrr",
+    "extra": {
+      "eas": {
+        "projectId": "7aff18e0-0839-4d61-a680-2f40b392b66f"
+      }
+    }
+  }
+}
