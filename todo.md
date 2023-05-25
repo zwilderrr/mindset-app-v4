@@ -1,3 +1,11 @@
+[v4]
+
+### ideas
+
+toggling on a mindset makes a bar increase. when they are all toggled on, then the confetti bursts
+
+[v3]
+
 ### Currently
 
 - install app, show me some examples, add FA, freezes when clicking "done".
