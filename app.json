@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.zwilderrr.mindsetapp-v4",
       "infoPlist": {
-        "CFBundleDisplayName": "Mindset",
+        "CFBundleDisplayName": "Intention",
         "CFBundleName": "mindset-app-v4",
         "ITSAppUsesNonExemptEncryption": "no"
       },

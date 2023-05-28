@@ -4,18 +4,20 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { FocusType } from "../../types";
 
-const MindsetContext = createContext<undefined | {}>(undefined);
+const IntentionContext = createContext<undefined | {}>(undefined);
 
-export function useMindset() {
-	const value = useContext(MindsetContext);
+export function useIntention() {
+	const value = useContext(IntentionContext);
 	if (value === undefined) {
-		throw new Error("useMindset must be accessed within the MindsetContext");
+		throw new Error(
+			"useIntention must be accessed within the IntentionContext"
+		);
 	}
 
 	return value;
 }
 
-export function MindsetProvider({ children }: { children: JSX.Element }) {
+export function IntentionProvider({ children }: { children: JSX.Element }) {
 	const [focuses, setFocuses] = useState<FocusType[]>([]);
 	const [updated, setUpdated] = useState(false);
 
@@ -43,6 +45,8 @@ export function MindsetProvider({ children }: { children: JSX.Element }) {
 	const value = useMemo(() => ({ focuses, getFocus }), [focuses, getFocus]);
 
 	return (
-		<MindsetContext.Provider value={value}>{children}</MindsetContext.Provider>
+		<IntentionContext.Provider value={value}>
+			{children}
+		</IntentionContext.Provider>
 	);
 }

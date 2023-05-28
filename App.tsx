@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import FocusScreen from "./src/screens/FocusScreen";
+import IntentionScreen from "./src/screens/IntentionScreen";
 import MetricScreen from "./src/screens/MetricScreen";
-import MindsetScreen from "./src/screens/MindsetScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -23,7 +23,7 @@ export default function App() {
 						options={{ title: "Focuses" }}
 					/>
 
-					<Stack.Screen name="mindset-screen" component={MindsetScreen} />
+					<Stack.Screen name="intention-screen" component={IntentionScreen} />
 
 					<Stack.Screen
 						name="metrics-screen"

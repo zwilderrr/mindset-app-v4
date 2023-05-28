@@ -17,9 +17,9 @@ export default function FocusScreen() {
 			/>
 
 			<Button
-				title="Go to mindset"
+				title="Go to intention"
 				onPress={() => {
-					navigation.navigate("mindset-screen");
+					navigation.navigate("intention-screen");
 				}}
 			/>
 			<Button title="reset" onPress={() => updateNumber(0)} />

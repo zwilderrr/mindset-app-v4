@@ -3,7 +3,7 @@ export type FocusType = {
 	title: string;
 	color: string;
 
-	mindsets: Mindset[];
+	intentions: IntentionType[];
 
 	// part of day the user wants to be notified
 	activeStart: number;
@@ -16,26 +16,26 @@ export type FocusType = {
 	target: number;
 	// how many times a user has activated a Focus
 	activations: number;
-	// if one active day has passed without the user activating a Mindset, the currentStreak resets to 0
+	// if one active day has passed without the user activating an Intention, the currentStreak resets to 0
 	currentStreak: number;
 	bestStreak: number;
-	// how many times over the life of a Focus that a Mindset has been activated.
-	mindsetActivations: number;
+	// how many times over the life of a Focus that an Intention has been activated.
+	intentionActivations: number;
 	// number of times over the life of a Focus that it's been activated.
 	focusActivations: number;
 
-	// whether confetti shows when toggling on a Mindset
+	// whether confetti shows when toggling on a Intention
 	showConfetti: boolean;
 	// whether or not to notify the user when a Focus goes inactive
 	notify: boolean;
 };
 
-export type Mindset = {
+export type IntentionType = {
 	id: string;
 	title: string;
 	emoji?: string;
 	notes?: string;
-	// the state the Mindset resets to. Most Mindsets default to Off, but negative Mindsets, like "impatient", default to *On*, requiring a user to turn them off
+	// the state the Intention resets to. Most Intentions default to Off, but negative Intentions, like "impatient", default to *On*, requiring a user to turn them off
 	defaultOn: boolean;
 	currentOn: boolean;
 };
