@@ -1,18 +1,15 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
-import { useAsyncStorage } from "../hooks/useAsyncStorage";
+import { useGetFocus } from "@app/hooks/useGetFocus";
+import { useRoute } from "@react-navigation/native";
 
 export default function IntentionScreen() {
-	const [number, updateNumber] = useAsyncStorage("number", 0);
+	const focus = useGetFocus();
 
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
-			<Text>Intention screen</Text>
-			<Button
-				title={number.toString()}
-				onPress={() => updateNumber(number + 1)}
-			/>
+			<Text>hey</Text>
 		</ScrollView>
 	);
 }

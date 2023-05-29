@@ -5,9 +5,15 @@ function uuidv4() {
 	return Math.ceil(Math.random() * 1000000000000000).toString();
 }
 
+const FOCUS_ORDER = "focusOrder";
+
 async function getItem<T>(key: string): Promise<T | null> {
 	const item = await AsyncStorage.getItem(key);
 	if (item === null) {
+		if (key === FOCUS_ORDER) {
+			await setItem(FOCUS_ORDER, []);
+			return [] as T;
+		}
 		throw new Error(`No value in storage exists for the "${key}" key.`);
 	}
 	return JSON.parse(item);
@@ -34,7 +40,7 @@ async function removeItem(key: string) {
 }
 
 async function getFocusOrder() {
-	const focusOrder = await getItem<string[]>("focusOrder");
+	const focusOrder = await getItem<string[]>(FOCUS_ORDER);
 	return focusOrder || [];
 }
 
