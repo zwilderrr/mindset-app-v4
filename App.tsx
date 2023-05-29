@@ -20,7 +20,7 @@ export default function App() {
 					<Stack.Screen
 						name="focus-screen"
 						component={FocusScreen}
-						options={{ title: "Focuses" }}
+						options={{ title: "Focuses", headerSearchBarOptions: {} }}
 					/>
 
 					<Stack.Screen name="intention-screen" component={IntentionScreen} />

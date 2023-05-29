@@ -4,6 +4,10 @@
 
 toggling on a mindset makes a bar increase. when they are all toggled on, then the confetti bursts
 
+### decisions
+
+- complex to get sortable list working in conjuction with a totally smooth search bar and collapse title functionality. when a user wants to sort, click sort. true, somehow the draggable flat list worked with a collapseable title and a search bar in v3 FocusScreen, but i just can't replicate it
+
 [v3]
 
 ### Currently
