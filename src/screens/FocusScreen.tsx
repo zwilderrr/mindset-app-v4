@@ -7,6 +7,7 @@ import { useMindset } from "@app/providers/IntentionProvider";
 export default function FocusScreen() {
 	const { navigate } = useNavigation();
 	const { focuses } = useMindset();
+
 	return (
 		<ScrollView contentInsetAdjustmentBehavior="automatic">
 			{focuses.map(focus => {

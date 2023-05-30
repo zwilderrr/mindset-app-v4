@@ -1,10 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FocusType } from "../types";
 
-function uuidv4() {
-	return Math.ceil(Math.random() * 1000000000000000).toString();
-}
-
 const FOCUS_ORDER = "focusOrder";
 
 async function getItem<T>(key: string): Promise<T | null> {
@@ -43,8 +39,15 @@ async function getFocusOrder() {
 	const focusOrder = await getItem<string[]>(FOCUS_ORDER);
 	return focusOrder || [];
 }
+export async function setFocusOrder(focusOrder: string[]) {
+	await setItem("focusOrder", focusOrder);
+}
 
 export async function getFocuses() {
 	const focusOrder = await getFocusOrder();
 	return getMulti<FocusType>(focusOrder);
+}
+
+export async function setFocus(focus: FocusType) {
+	await setItem<FocusType>(focus.id, focus);
 }
