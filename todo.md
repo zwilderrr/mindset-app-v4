@@ -2,7 +2,8 @@
 
 ### ideas
 
-toggling on a mindset makes a bar increase. when they are all toggled on, then the confetti bursts
+- toggling on a mindset makes a bar increase. when they are all toggled on, then the confetti bursts
+- use the range slider for time, with minutes from 12am defining the min and max
 
 ### decisions
 
