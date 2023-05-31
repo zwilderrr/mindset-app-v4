@@ -1,8 +1,7 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
 import { useGetFocus } from "@app/hooks/useGetFocus";
-import { useRoute } from "@react-navigation/native";
 
 export default function IntentionScreen() {
 	const focus = useGetFocus();

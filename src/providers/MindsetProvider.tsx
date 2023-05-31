@@ -37,43 +37,40 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 	}, [updated]);
 
 	async function loadFocuses() {
-		setUpdated(false);
 		const focuses = await API.getFocuses();
 		setFocuses(focuses);
 		setUpdated(true);
 	}
 
 	async function addFocus(focus: FocusType) {
-		setUpdated(false);
 		await API.setFocus(focus);
+		setUpdated(false);
 	}
 
 	// utils
+	async function clearData(shouldUpdate = true) {
+		const keys = await AsyncStorage.getAllKeys();
+		if (keys) {
+			// todo - cancel push notifications
+			await AsyncStorage.multiRemove(keys);
+		}
+		if (shouldUpdate) {
+			setUpdated(false);
+		}
+	}
 
 	async function seedData() {
-		await clearData();
+		await clearData(false);
 		const focusOrder = [];
 		for (const focus of SEED_DATA) {
 			focusOrder.push(focus.id);
 			await API.setFocus(focus);
 		}
 		await API.setFocusOrder(focusOrder);
+		setUpdated(false);
 	}
 
-	async function clearData() {
-		const keys = await AsyncStorage.getAllKeys();
-		if (keys) {
-			// for (const k of keys) {
-			// 	await cancelPushNotification(k);
-			// }
-			await AsyncStorage.multiRemove(keys);
-		}
-	}
-
-	const value = useMemo(
-		() => ({ focuses, addFocus, seedData, clearData }),
-		[focuses, addFocus, seedData, clearData]
-	);
+	const value = { focuses, addFocus, seedData, clearData };
 
 	return (
 		<MindsetContext.Provider value={value}>{children}</MindsetContext.Provider>

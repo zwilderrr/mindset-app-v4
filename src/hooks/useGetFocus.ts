@@ -1,5 +1,5 @@
 import { FocusType } from "types";
-import { useMindset } from "@app/providers/IntentionProvider";
+import { useMindset } from "@app/providers/MindsetProvider";
 import { useRoute } from "@react-navigation/native";
 
 export function useGetFocus(id?: string): FocusType {
