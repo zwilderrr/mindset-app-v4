@@ -37,5 +37,5 @@ export type IntentionType = {
 	notes?: string;
 	// the state the Intention resets to. Most Intentions default to Off, but negative Intentions, like "impatient", default to *On*, requiring a user to turn them off
 	defaultsToActive: boolean;
-	currentlyActive: boolean;
+	active: boolean;
 };

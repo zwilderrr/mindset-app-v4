@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FocusType } from "../types";
+import { FocusType } from "./types";
 
 const FOCUS_ORDER = "focusOrder";
 

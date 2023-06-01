@@ -1,4 +1,4 @@
-import { FocusType, IntentionType } from "types";
+import { FocusType, IntentionType } from "@app/types";
 
 function uuidv4() {
 	return Math.ceil(Math.random() * 1000000000000000).toString();
@@ -45,6 +45,6 @@ export function baseIntention(): IntentionType {
 		emoji: "",
 		notes: "",
 		defaultsToActive: false,
-		currentlyActive: false,
+		active: false,
 	};
 }
