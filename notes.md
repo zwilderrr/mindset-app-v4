@@ -4,6 +4,8 @@ A way to organize and reinforce your ideals, attitudes, and aspirations around t
 
 A Focus is a container for the attitudes, beliefs, hopes, and dreams. It's a group of Intentions
 
+A Mindset is a container for the attitudes, beliefs, hopes, and dreams. It's a group of Intentions
+
 i think some of the confusion is that you could have a Focus titled "Affirmations", but you could also have affirmations that you associate with the "Home" focus).
 
 Potential user flow
