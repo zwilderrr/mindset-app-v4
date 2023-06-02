@@ -22,7 +22,7 @@
         "CFBundleName": "mindset-app-v4",
         "ITSAppUsesNonExemptEncryption": "no"
       },
-      "buildNumber": "18"
+      "buildNumber": "25"
     },
     "android": {
       "adaptiveIcon": {

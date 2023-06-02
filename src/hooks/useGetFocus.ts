@@ -1,18 +1,15 @@
-import { FocusType } from "types";
+import { FocusType } from "@app/types";
 import { useMindset } from "@app/providers/MindsetProvider";
 import { useRoute } from "@react-navigation/native";
 
-export function useGetFocus(id?: string): FocusType {
+export function useGetFocus() {
 	const {
 		params: { focusId },
 	} = useRoute();
 
-	const { focuses } = useMindset();
-	const focus = focuses.find(f => f.id === id || focusId);
+	const { getFocus } = useMindset();
 
-	if (!focus) {
-		throw new Error(`No focus found with id of ${focusId}`);
-	}
+	const focus = getFocus(focusId);
 
 	return focus;
 }
