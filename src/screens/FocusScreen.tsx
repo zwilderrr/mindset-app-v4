@@ -1,9 +1,6 @@
 import {
 	Button,
-<<<<<<< Updated upstream
-=======
 	Colors,
->>>>>>> Stashed changes
 	Drawer,
 	Text,
 	TouchableOpacity,
@@ -23,10 +20,6 @@ export default function FocusScreen() {
 			<ScrollView contentInsetAdjustmentBehavior="automatic">
 				{focuses.map(focus => {
 					return (
-<<<<<<< Updated upstream
-						<Drawer key={focus.id}>
-							<TouchableOpacity
-=======
 						<Drawer
 							key={focus.id}
 							rightItems={[
@@ -49,36 +42,19 @@ export default function FocusScreen() {
 						>
 							<TouchableOpacity
 								activeOpacity={1}
->>>>>>> Stashed changes
 								onPress={() =>
 									navigate("intention-screen", {
 										focusId: focus.id,
 									})
 								}
 							>
-<<<<<<< Updated upstream
-								<Text>{focus.title}</Text>
-=======
 								<View centerV padding-s4 bg-white style={{ height: 60 }}>
 									<Text>{focus.title}</Text>
 								</View>
->>>>>>> Stashed changes
 							</TouchableOpacity>
 						</Drawer>
 					);
 				})}
-<<<<<<< Updated upstream
-
-				<Button
-					onPress={() =>
-						navigate("intention-screen", {
-							params: { focusId: "this-is-a-focus-id" },
-						})
-					}
-					label="intention screen"
-				/>
-=======
->>>>>>> Stashed changes
 			</ScrollView>
 			<TestButtons />
 		</>

@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-import { StyleSheet, Text } from "react-native";
-=======
 import {
 	ActionBar,
 	Avatar,
@@ -24,16 +21,12 @@ import {
 } from "react-native-gesture-handler";
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
->>>>>>> Stashed changes
 
 import { baseIntention } from "@app/dataUtils";
 import { useGetFocus } from "@app/hooks/useGetFocus";
-<<<<<<< Updated upstream
-=======
 import { useMindset } from "@app/providers/MindsetProvider";
 
 const drag = require("@app/assets/drag.png");
->>>>>>> Stashed changes
 
 export default function IntentionScreen() {
 	const focus = useGetFocus();
@@ -55,6 +48,8 @@ export default function IntentionScreen() {
 		if (titleRef?.current?.isFocused() || notesRef?.current?.isFocused()) {
 			return;
 		}
+
+		// todo handle logic for blank fields
 		addIntention(focus, nextIntention);
 		setIsAdding(false);
 	}
