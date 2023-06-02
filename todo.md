@@ -1,5 +1,9 @@
 [v4]
 
+### todo
+
+- keyboard avoiding view
+
 ### ideas
 
 - toggling on a mindset makes a bar increase. when they are all toggled on, then the confetti bursts

@@ -10,6 +10,7 @@ type MindsetContextType = {
 	focuses: FocusType[];
 	addFocus: (focus: FocusType) => Promise<void>;
 	getFocus: (focusId: string) => FocusType;
+	addIntention: (focus: FocusType, intention: IntentionType) => Promise<void>;
 	seedData: () => Promise<void>;
 	clearData: () => Promise<void>;
 };
@@ -58,6 +59,11 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 	}
 
 	/** Intentions */
+	async function addIntention(focus: FocusType, intention: IntentionType) {
+		focus.intentions.push(intention);
+		await API.setFocus(focus);
+		setUpdated(false);
+	}
 
 	/** utils */
 
@@ -83,7 +89,14 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		setUpdated(false);
 	}
 
-	const value = { focuses, addFocus, getFocus, seedData, clearData };
+	const value = {
+		focuses,
+		addFocus,
+		getFocus,
+		addIntention,
+		seedData,
+		clearData,
+	};
 
 	return (
 		<MindsetContext.Provider value={value}>{children}</MindsetContext.Provider>

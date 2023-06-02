@@ -8,22 +8,49 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native-ui-lib";
-import { Switch as RNSwitch, StyleSheet, Text } from "react-native";
+import {
+	KeyboardAvoidingView,
+	Platform,
+	Switch as RNSwitch,
+	StyleSheet,
+	Text,
+} from "react-native";
 import {
 	ScrollView,
 	TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import { baseIntention } from "@app/dataUtils";
 import { useGetFocus } from "@app/hooks/useGetFocus";
 import { useMindset } from "@app/providers/MindsetProvider";
-import { useState } from "react";
 
 const drag = require("@app/assets/drag.png");
 
 export default function IntentionScreen() {
 	const focus = useGetFocus();
+	const { addIntention } = useMindset();
 	const [isAdding, setIsAdding] = useState(false);
+	const [nextIntention, setNextIntention] = useState(baseIntention());
+	const titleRef = useRef(null);
+	const notesRef = useRef(null);
+
+	useEffect(() => {
+		if (isAdding) {
+			titleRef?.current?.focus();
+		} else {
+			setNextIntention(baseIntention());
+		}
+	}, [isAdding]);
+
+	function handleBlur() {
+		if (titleRef?.current?.isFocused() || notesRef?.current?.isFocused()) {
+			return;
+		}
+		addIntention(focus, nextIntention);
+		setIsAdding(false);
+	}
 
 	return (
 		<>
@@ -36,22 +63,30 @@ export default function IntentionScreen() {
 							rightItems={[
 								{
 									text: "Read",
-									background: Colors.blue30,
+									background: Colors.transparent,
 									onPress: () => console.log("read pressed"),
 								},
 								{
 									text: "Read",
-									background: Colors.blue30,
+									background: Colors.transparent,
 									onPress: () => console.log("read pressed"),
 								},
 							]}
 							leftItem={{
 								text: "Delete",
-								background: Colors.red30,
+								background: Colors.transparent,
 								onPress: () => console.log("delete pressed"),
 							}}
 						>
-							<Card flex row spread padding-s4 bg-white style={{ height: 60 }}>
+							<Card
+								flex
+								row
+								spread
+								padding-s4
+								margin-s2
+								bg-white
+								style={{ height: 60 }}
+							>
 								<Avatar label={intention.emoji || intention.title[0]} />
 								<TouchableOpacity activeOpacity={1}>
 									<Text>{intention.title}</Text>
@@ -64,37 +99,33 @@ export default function IntentionScreen() {
 				})}
 				{isAdding && (
 					<Card
-						flex
 						row
-						spread
 						padding-s4
 						bg-white
+						spread
 						style={{ height: 60, borderWidth: 1, borderColor: Colors.grey1 }}
 					>
-						{/* emoji */}
-						<Avatar label="I" />
+						<View row>
+							{/* emoji */}
+							<Avatar label={nextIntention.emoji || nextIntention.title[0]} />
 
-						{/* intention */}
-						<TextField
-							placeholder="intention"
-							onBlur={e => {
-								// add to intentions
-								// consider adding logic to test what else they've clicked on in order to exit early
-								setIsAdding(false);
-								console.log(e.target);
-							}}
-						/>
-						{/* notes */}
-						<TextField
-							placeholder="notes"
-							onBlur={e => {
-								// add to intentions
-								// consider adding logic to test what else they've clicked on in order to exit early
-								setIsAdding(false);
-								console.log(e.target);
-							}}
-						/>
-						<TextField />
+							{/* intention */}
+							<TextField
+								ref={titleRef}
+								placeholder="intention"
+								value={nextIntention.title}
+								onChangeText={title => setNextIntention(i => ({ ...i, title }))}
+								onBlur={handleBlur}
+							/>
+							{/* notes */}
+							<TextField
+								ref={notesRef}
+								placeholder="notes"
+								onBlur={handleBlur}
+							/>
+							<TextField />
+						</View>
+						<RNSwitch disabled />
 					</Card>
 				)}
 			</ScrollView>
@@ -105,7 +136,11 @@ export default function IntentionScreen() {
 						label: "Add",
 						iconSource: drag,
 						iconStyle: { height: 26, resizeMode: "contain" },
-						onPress: () => !isAdding && setIsAdding(true),
+						onPress: () => {
+							if (!isAdding) {
+								setIsAdding(true);
+							}
+						},
 					},
 					{ label: "" },
 				]}
