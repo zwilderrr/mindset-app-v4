@@ -3,7 +3,7 @@
 ### todo
 
 - [x] keyboard avoiding view
-- [ ] bottom card hidden by action drawer
+- [ ] bottom card hidden by Action Drawer
 
 ### ideas
 
