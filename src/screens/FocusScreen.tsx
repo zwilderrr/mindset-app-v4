@@ -8,6 +8,7 @@ import {
 } from "react-native-ui-lib";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
 import { useMindset } from "@app/providers/MindsetProvider";
 
@@ -17,7 +18,7 @@ export default function FocusScreen() {
 
 	return (
 		<>
-			<ScrollView contentInsetAdjustmentBehavior="automatic">
+			<KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic">
 				{focuses.map(focus => {
 					return (
 						<Drawer
@@ -55,7 +56,7 @@ export default function FocusScreen() {
 						</Drawer>
 					);
 				})}
-			</ScrollView>
+			</KeyboardAwareScrollView>
 			<TestButtons />
 		</>
 	);

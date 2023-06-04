@@ -8,13 +8,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native-ui-lib";
-import {
-	KeyboardAvoidingView,
-	Platform,
-	Switch as RNSwitch,
-	StyleSheet,
-	Text,
-} from "react-native";
+import { Platform, Switch as RNSwitch, StyleSheet, Text } from "react-native";
 import {
 	ScrollView,
 	TouchableWithoutFeedback,
@@ -22,6 +16,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { baseIntention } from "@app/dataUtils";
 import { useGetFocus } from "@app/hooks/useGetFocus";
 import { useMindset } from "@app/providers/MindsetProvider";
@@ -49,6 +44,10 @@ export default function IntentionScreen() {
 			return;
 		}
 
+		if (!nextIntention.title && nextIntention.notes) {
+			nextIntention.title = "New intention";
+		}
+
 		// todo handle logic for blank fields
 		addIntention(focus, nextIntention);
 		setIsAdding(false);
@@ -57,7 +56,7 @@ export default function IntentionScreen() {
 	return (
 		<>
 			<Text>{focus.title}</Text>
-			<ScrollView contentInsetAdjustmentBehavior="automatic">
+			<KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic">
 				{focus.intentions.map(intention => {
 					return (
 						<Drawer
@@ -130,7 +129,7 @@ export default function IntentionScreen() {
 						<RNSwitch disabled />
 					</Card>
 				)}
-			</ScrollView>
+			</KeyboardAwareScrollView>
 
 			<ActionBar
 				actions={[
@@ -150,11 +149,3 @@ export default function IntentionScreen() {
 		</>
 	);
 }
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});
