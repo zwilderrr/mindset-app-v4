@@ -1,9 +1,21 @@
 [v4]
 
+### left off
+
+updating an intention
+
+- challenge is that when clicking on an intention, that intention's onPressIn callback is called before the previous intention's onBlur is called
+- potential solutions
+  - onPressIn, return early if user is currently editing an intention. this will call onBlur and update everything properly. <--- I CHOSE THIS
+    - advantage is that the user can click out of an intention without inevitably opening another one, which can be annoying.
+  - remove the onPressIn function. Instead, onChangeText should set the nextIntention as it currently does and add a "Done" button to the header menu.The previous intention's onBlur function runs. The user can exit the flow by clicking Done
+    - advantage is that there's less logic. might be the more expected user experience
+
 ### todo
 
 - [x] keyboard avoiding view
 - [ ] bottom card hidden by Action Drawer
+- [ ] clicking on the avatar brings up a hidden text field
 
 ### ideas
 

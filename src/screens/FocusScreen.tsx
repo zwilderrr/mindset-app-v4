@@ -1,5 +1,6 @@
 import {
 	Button,
+	Card,
 	Colors,
 	Drawer,
 	Text,
@@ -41,8 +42,14 @@ export default function FocusScreen() {
 								onPress: () => console.log("delete pressed"),
 							}}
 						>
-							<TouchableOpacity
-								activeOpacity={1}
+							<Card
+								flex
+								row
+								spread
+								padding-s4
+								margin-s2
+								bg-white
+								style={{ height: 60 }}
 								onPress={() =>
 									navigate("intention-screen", {
 										focusId: focus.id,
@@ -52,7 +59,7 @@ export default function FocusScreen() {
 								<View centerV padding-s4 bg-white style={{ height: 60 }}>
 									<Text>{focus.title}</Text>
 								</View>
-							</TouchableOpacity>
+							</Card>
 						</Drawer>
 					);
 				})}
