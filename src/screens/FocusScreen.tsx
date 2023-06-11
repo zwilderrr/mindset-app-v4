@@ -27,18 +27,18 @@ export default function FocusScreen() {
 							rightItems={[
 								{
 									text: "Read",
-									background: Colors.blue30,
+									background: Colors.transparent,
 									onPress: () => console.log("read pressed"),
 								},
 								{
 									text: "Read",
-									background: Colors.blue30,
+									background: Colors.transparent,
 									onPress: () => console.log("read pressed"),
 								},
 							]}
 							leftItem={{
 								text: "Delete",
-								background: Colors.red30,
+								background: Colors.transparent,
 								onPress: () => console.log("delete pressed"),
 							}}
 						>
@@ -56,9 +56,7 @@ export default function FocusScreen() {
 									})
 								}
 							>
-								<View centerV padding-s4 bg-white style={{ height: 60 }}>
-									<Text>{focus.title}</Text>
-								</View>
+								<Text>{focus.title}</Text>
 							</Card>
 						</Drawer>
 					);
