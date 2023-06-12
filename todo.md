@@ -16,6 +16,7 @@ updating an intention
 - [x] keyboard avoiding view
 - [ ] bottom card hidden by Action Drawer
 - [ ] clicking on the avatar brings up a hidden text field
+- [ ] on notes hides behind keyboard on type
 
 ### ideas
 

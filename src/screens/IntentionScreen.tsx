@@ -34,8 +34,6 @@ export default function IntentionScreen() {
 	useEffect(() => {
 		if (isAdding) {
 			titleRef?.current?.focus();
-		} else {
-			setNextIntention(baseIntention());
 		}
 	}, [isAdding]);
 
@@ -44,13 +42,25 @@ export default function IntentionScreen() {
 			return;
 		}
 
-		if (!nextIntention.title && nextIntention.notes) {
-			nextIntention.title = "New intention";
+		if (!nextIntention.title && !nextIntention.notes) {
+			setIsAdding(false);
+			return;
 		}
 
-		// todo handle logic for blank fields
+		if (!nextIntention.title && nextIntention.notes) {
+			nextIntention.title = "New Awesome Intention";
+		}
+
 		addIntention(focus, nextIntention);
 		setIsAdding(false);
+		setNextIntention(baseIntention());
+	}
+
+	function handlePressAddIntention() {
+		if (isAdding) {
+			return;
+		}
+		setIsAdding(true);
 	}
 
 	return (
@@ -79,15 +89,7 @@ export default function IntentionScreen() {
 								onPress: () => console.log("delete pressed"),
 							}}
 						>
-							<Card
-								flex
-								row
-								spread
-								padding-s4
-								margin-s2
-								bg-white
-								style={{ height: 60 }}
-							>
+							<Card flex row spread padding-s4 margin-s2 bg-white>
 								<Avatar label={intention.emoji || intention.title[0]} />
 								<TouchableOpacity activeOpacity={1}>
 									<Text>{intention.title}</Text>
@@ -104,27 +106,33 @@ export default function IntentionScreen() {
 						padding-s4
 						bg-white
 						spread
-						style={{ height: 60, borderWidth: 1, borderColor: Colors.grey1 }}
+						style={{ borderWidth: 1, borderColor: Colors.grey1 }}
 					>
 						<View row>
 							{/* emoji */}
 							<Avatar label={nextIntention.emoji || nextIntention.title[0]} />
 
-							{/* intention */}
-							<TextField
-								ref={titleRef}
-								placeholder="intention"
-								value={nextIntention.title}
-								onChangeText={title => setNextIntention(i => ({ ...i, title }))}
-								onBlur={handleBlur}
-							/>
-							{/* notes */}
-							<TextField
-								ref={notesRef}
-								placeholder="notes"
-								onBlur={handleBlur}
-							/>
-							<TextField />
+							<View>
+								{/* intention */}
+								<TextField
+									ref={titleRef}
+									placeholder="intention"
+									value={nextIntention.title}
+									onChangeText={title =>
+										setNextIntention(i => ({ ...i, title }))
+									}
+									onBlur={handleBlur}
+								/>
+								{/* notes */}
+								<TextField
+									ref={notesRef}
+									placeholder="notes"
+									onChangeText={notes =>
+										setNextIntention(i => ({ ...i, notes }))
+									}
+									onBlur={handleBlur}
+								/>
+							</View>
 						</View>
 						<RNSwitch disabled />
 					</Card>

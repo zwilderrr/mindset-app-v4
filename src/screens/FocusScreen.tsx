@@ -72,7 +72,7 @@ export function TestButtons() {
 
 	return (
 		<View absH absB height={100}>
-			<TouchableOpacity onPress={clearData}>
+			<TouchableOpacity onPress={clearData} style={{ marginBottom: 10 }}>
 				<Text>Clear data</Text>
 			</TouchableOpacity>
 			<TouchableOpacity onPress={seedData}>
