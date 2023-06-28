@@ -4,11 +4,17 @@ import {
 	Card,
 	Colors,
 	Drawer,
+	Text,
 	TextField,
 	TouchableOpacity,
 	View,
 } from "react-native-ui-lib";
-import { Platform, Switch as RNSwitch, StyleSheet, Text } from "react-native";
+import {
+	Keyboard,
+	Platform,
+	Switch as RNSwitch,
+	StyleSheet,
+} from "react-native";
 import {
 	ScrollView,
 	TouchableWithoutFeedback,
@@ -16,6 +22,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import { IntentionType } from "@app/types";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { baseIntention } from "@app/dataUtils";
 import { useGetFocus } from "@app/hooks/useGetFocus";
@@ -25,52 +32,50 @@ const drag = require("@app/assets/drag.png");
 
 export default function IntentionScreen() {
 	const focus = useGetFocus();
-	const { addIntention } = useMindset();
-	const [isAdding, setIsAdding] = useState(false);
-	const [nextIntention, setNextIntention] = useState(baseIntention());
-	const titleRef = useRef(null);
-	const notesRef = useRef(null);
+	const [editing, setEditing] = useState<IntentionType | undefined>();
+	const idRef = useRef("");
+	const [intentionsFromState, setIntentionsFromState] = useState(
+		focus.intentions
+	);
+
+	const { addIntention, setFocus } = useMindset();
 
 	useEffect(() => {
-		if (isAdding) {
-			titleRef?.current?.focus();
-		}
-	}, [isAdding]);
+		const keyboardDidHideListener = Keyboard.addListener(
+			"keyboardDidHide",
+			() => {
+				setEditing(undefined);
+			}
+		);
 
-	function handleBlur() {
-		if (titleRef?.current?.isFocused() || notesRef?.current?.isFocused()) {
-			return;
-		}
+		// Cleanup the event listener
+		return () => {
+			keyboardDidHideListener.remove();
+		};
+	}, []);
 
-		if (!nextIntention.title && !nextIntention.notes) {
-			setIsAdding(false);
-			return;
-		}
+	useEffect(() => {
+		setIntentionsFromState(focus.intentions);
+	}, [JSON.stringify(focus.intentions)]);
 
-		if (!nextIntention.title && nextIntention.notes) {
-			nextIntention.title = "New Awesome Intention";
-		}
-
-		addIntention(focus, nextIntention);
-		setIsAdding(false);
-		setNextIntention(baseIntention());
+	function handleOnPressIn(intention: IntentionType) {
+		idRef.current = intention.id;
+		setEditing(intention);
 	}
 
-	function handlePressAddIntention() {
-		if (isAdding) {
-			return;
-		}
-		setIsAdding(true);
+	function handlePressAdd() {
+		addIntention(focus, baseIntention());
 	}
 
 	return (
 		<>
 			<Text>{focus.title}</Text>
 			<KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic">
-				{focus.intentions.map(intention => {
+				{intentionsFromState.map((intentionFromState, idx) => {
+					const isEditing = intentionFromState.id === editing?.id;
 					return (
 						<Drawer
-							key={intention.id}
+							key={intentionFromState.id}
 							rightItems={[
 								{
 									text: "Read",
@@ -90,53 +95,52 @@ export default function IntentionScreen() {
 							}}
 						>
 							<Card flex row spread padding-s4 margin-s2 bg-white>
-								<Avatar label={intention.emoji || intention.title[0]} />
-								<TouchableOpacity activeOpacity={1}>
-									<Text>{intention.title}</Text>
-									<Text>{intention.notes}</Text>
+								<TouchableOpacity activeOpacity={1} row>
+									<Avatar
+										label={
+											intentionFromState.emoji || intentionFromState.title[0]
+										}
+										// update this logic to trigger a hidden text field
+										// onPress={() => handlePressIntention(intention)}
+									/>
+									{/* <HiddenTextField /> */}
+									<View>
+										{/* intention */}
+										<TextField
+											placeholder="intention"
+											value={intentionFromState.title}
+											onPressIn={() => handleOnPressIn(intentionFromState)}
+											onChangeText={nextTitle => {
+												setIntentionsFromState(intentions => {
+													const nextIntentionsFromState = [...intentions];
+													nextIntentionsFromState[idx].title = nextTitle;
+													return nextIntentionsFromState;
+												});
+											}}
+										/>
+
+										{/* notes */}
+										{(intentionFromState.notes || isEditing) && (
+											<TextField
+												placeholder="notes"
+												value={intentionFromState.notes}
+												onPressIn={() => handleOnPressIn(intentionFromState)}
+												onChangeText={nextNote => {
+													setIntentionsFromState(intentions => {
+														const nextIntentionsFromState = [...intentions];
+														nextIntentionsFromState[idx].notes = nextNote;
+														return nextIntentionsFromState;
+													});
+												}}
+											/>
+										)}
+									</View>
 								</TouchableOpacity>
-								<RNSwitch value={intention.active} />
+								<RNSwitch value={intentionFromState.active} />
 							</Card>
 						</Drawer>
 					);
 				})}
-				{isAdding && (
-					<Card
-						row
-						padding-s4
-						bg-white
-						spread
-						style={{ borderWidth: 1, borderColor: Colors.grey1 }}
-					>
-						<View row>
-							{/* emoji */}
-							<Avatar label={nextIntention.emoji || nextIntention.title[0]} />
-
-							<View>
-								{/* intention */}
-								<TextField
-									ref={titleRef}
-									placeholder="intention"
-									value={nextIntention.title}
-									onChangeText={title =>
-										setNextIntention(i => ({ ...i, title }))
-									}
-									onBlur={handleBlur}
-								/>
-								{/* notes */}
-								<TextField
-									ref={notesRef}
-									placeholder="notes"
-									onChangeText={notes =>
-										setNextIntention(i => ({ ...i, notes }))
-									}
-									onBlur={handleBlur}
-								/>
-							</View>
-						</View>
-						<RNSwitch disabled />
-					</Card>
-				)}
 			</KeyboardAwareScrollView>
 
 			<ActionBar
@@ -145,11 +149,7 @@ export default function IntentionScreen() {
 						label: "Add",
 						iconSource: drag,
 						iconStyle: { height: 26, resizeMode: "contain" },
-						onPress: () => {
-							if (!isAdding) {
-								setIsAdding(true);
-							}
-						},
+						onPress: handlePressAdd,
 					},
 					{ label: "" },
 				]}
@@ -157,3 +157,44 @@ export default function IntentionScreen() {
 		</>
 	);
 }
+
+// {nextIntention && (
+// 	<Card flex row spread padding-s4 margin-s2 bg-white>
+// 		<View row>
+// 			{/* emoji */}
+// 			<Avatar label={nextIntention.emoji || nextIntention.title[0]} />
+
+// 			<View>
+// 				{/* intention */}
+// 				<TextField
+// 					ref={addTitleRef}
+// 					placeholder="intention"
+// 					value={nextIntention.title}
+// 					onBlur={handleBlur}
+// 					onChangeText={title => {
+// 						setNextIntention(i => {
+// 							if (nextIntention) {
+// 								return { ...nextIntention, title };
+// 							}
+// 						});
+// 					}}
+// 				/>
+// 				{/* notes */}
+// 				<TextField
+// 					ref={addNotesRef}
+// 					value={nextIntention.notes}
+// 					placeholder="notes"
+// 					onBlur={handleBlur}
+// 					onChangeText={notes => {
+// 						setNextIntention(i => {
+// 							if (nextIntention) {
+// 								return { ...nextIntention, notes };
+// 							}
+// 						});
+// 					}}
+// 				/>
+// 			</View>
+// 		</View>
+// 		<RNSwitch disabled />
+// 	</Card>
+// )}
