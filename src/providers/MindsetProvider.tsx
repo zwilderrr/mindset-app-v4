@@ -1,6 +1,7 @@
 import * as API from "../API";
 
 import { FocusType, IntentionType } from "@app/types";
+import { baseFocus, baseIntention } from "@app/dataUtils";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,9 +9,9 @@ import { SEED_DATA } from "@app/seedData";
 
 type MindsetContextType = {
 	focuses: FocusType[];
-	addFocus: (focus: FocusType) => Promise<void>;
+	addFocus: () => Promise<void>;
 	getFocus: (focusId: string) => FocusType;
-	addIntention: (focus: FocusType, intention: IntentionType) => Promise<void>;
+	addIntention: (focus: FocusType) => Promise<void>;
 	seedData: () => Promise<void>;
 	clearData: () => Promise<void>;
 };
@@ -53,14 +54,14 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		return focus;
 	}
 
-	async function addFocus(focus: FocusType) {
-		await API.setFocus(focus);
+	async function addFocus() {
+		await API.addFocus(baseFocus());
 		setUpdated(false);
 	}
 
 	/** Intentions */
-	async function addIntention(focus: FocusType, intention: IntentionType) {
-		focus.intentions.push(intention);
+	async function addIntention(focus: FocusType) {
+		focus.intentions.push(baseIntention());
 		await API.setFocus(focus);
 		setUpdated(false);
 	}

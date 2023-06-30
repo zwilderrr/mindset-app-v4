@@ -48,7 +48,6 @@ export default function IntentionScreen() {
 			}
 		);
 
-		// Cleanup the event listener
 		return () => {
 			keyboardDidHideListener.remove();
 		};
@@ -64,7 +63,7 @@ export default function IntentionScreen() {
 	}
 
 	function handlePressAdd() {
-		addIntention(focus, baseIntention());
+		addIntention(focus);
 	}
 
 	return (

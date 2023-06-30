@@ -40,6 +40,7 @@ async function getFocusOrder() {
 	const focusOrder = await getItem<string[]>(FOCUS_ORDER);
 	return focusOrder || [];
 }
+
 export async function setFocusOrder(focusOrder: string[]) {
 	await setItem("focusOrder", focusOrder);
 }
@@ -51,4 +52,11 @@ export async function getFocuses() {
 
 export async function setFocus(focus: FocusType) {
 	await setItem<FocusType>(focus.id, focus);
+}
+
+export async function addFocus(focus: FocusType) {
+	const focusOrder = await getFocusOrder();
+	focusOrder.push(focus.id);
+	await setFocusOrder(focusOrder);
+	await setFocus(focus);
 }

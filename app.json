@@ -22,7 +22,7 @@
         "CFBundleName": "mindset-app-v4",
         "ITSAppUsesNonExemptEncryption": "no"
       },
-      "buildNumber": "28"
+      "buildNumber": "29"
     },
     "android": {
       "adaptiveIcon": {
@@ -38,6 +38,12 @@
       "eas": {
         "projectId": "7aff18e0-0839-4d61-a680-2f40b392b66f"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7aff18e0-0839-4d61-a680-2f40b392b66f"
     }
   }
 }
