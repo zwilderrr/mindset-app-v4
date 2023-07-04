@@ -38,7 +38,7 @@ export default function IntentionScreen() {
 		focus.intentions
 	);
 
-	const { addIntention, setFocus } = useMindset();
+	const { addIntention } = useMindset();
 
 	useEffect(() => {
 		const keyboardDidHideListener = Keyboard.addListener(

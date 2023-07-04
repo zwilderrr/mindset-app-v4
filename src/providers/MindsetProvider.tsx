@@ -54,6 +54,11 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		return focus;
 	}
 
+	async function setFocus(nextFocus: FocusType) {
+		await API.setFocus(nextFocus);
+		setUpdated(false);
+	}
+
 	async function addFocus() {
 		await API.addFocus(baseFocus());
 		setUpdated(false);
