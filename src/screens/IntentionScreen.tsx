@@ -1,31 +1,10 @@
-import {
-	ActionBar,
-	Avatar,
-	Card,
-	Colors,
-	Drawer,
-	Text,
-	TextField,
-	TouchableOpacity,
-	View,
-} from "react-native-ui-lib";
-import {
-	Keyboard,
-	Platform,
-	Switch as RNSwitch,
-	StyleSheet,
-} from "react-native";
-import {
-	ScrollView,
-	TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { ActionBar, Text } from "react-native-ui-lib";
 import { useEffect, useRef, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { Intention } from "@app/components/Intention";
 import { IntentionType } from "@app/types";
+import { Keyboard } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { baseIntention } from "@app/dataUtils";
 import { useGetFocus } from "@app/hooks/useGetFocus";
 import { useMindset } from "@app/providers/MindsetProvider";
 
@@ -64,8 +43,6 @@ export default function IntentionScreen() {
 	function handlePressAdd() {
 		addIntention(focusFromStorage);
 	}
-
-	console.log("render");
 
 	return (
 		<>
