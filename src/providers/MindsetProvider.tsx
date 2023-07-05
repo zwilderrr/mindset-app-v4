@@ -11,6 +11,7 @@ type MindsetContextType = {
 	focuses: FocusType[];
 	addFocus: () => Promise<void>;
 	getFocus: (focusId: string) => FocusType;
+	updateFocus: (focus: FocusType) => Promise<void>;
 	addIntention: (focus: FocusType) => Promise<void>;
 	seedData: () => Promise<void>;
 	clearData: () => Promise<void>;
@@ -54,8 +55,8 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		return focus;
 	}
 
-	async function setFocus(nextFocus: FocusType) {
-		await API.setFocus(nextFocus);
+	async function updateFocus(nextFocus: FocusType) {
+		await API.updateFocus(nextFocus);
 		setUpdated(false);
 	}
 
@@ -67,7 +68,7 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 	/** Intentions */
 	async function addIntention(focus: FocusType) {
 		focus.intentions.push(baseIntention());
-		await API.setFocus(focus);
+		await API.updateFocus(focus);
 		setUpdated(false);
 	}
 
@@ -89,9 +90,9 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		const focusOrder = [];
 		for (const focus of SEED_DATA) {
 			focusOrder.push(focus.id);
-			await API.setFocus(focus);
+			await API.updateFocus(focus);
 		}
-		await API.setFocusOrder(focusOrder);
+		await API.updateFocusOrder(focusOrder);
 		setUpdated(false);
 	}
 
@@ -102,6 +103,7 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		addIntention,
 		seedData,
 		clearData,
+		updateFocus,
 	};
 
 	return (

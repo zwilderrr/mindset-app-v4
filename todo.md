@@ -2,8 +2,6 @@
 
 ### left off
 
-updating an intention
-
 - challenge is that when clicking on an intention, that intention's onPressIn callback is called before the previous intention's onBlur is called
 - potential solutions
   - onPressIn, return early if user is currently editing an intention. this will call onBlur and update everything properly. <--- I CHOSE THIS
@@ -17,6 +15,7 @@ updating an intention
 - [ ] bottom card hidden by Action Drawer
 - [ ] clicking on the avatar brings up a hidden text field
 - [ ] on notes hides behind keyboard on type
+- [ ] memoize intentions
 
 ### ideas
 
