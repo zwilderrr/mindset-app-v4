@@ -35,6 +35,10 @@ export default function IntentionScreen() {
 		updateFocus(focus);
 	}, [JSON.stringify(focus)]);
 
+	useEffect(() => {
+		setFocus(focusFromStorage);
+	}, [JSON.stringify(focusFromStorage)]);
+
 	function handleOnPressIn(intention: IntentionType) {
 		idRef.current = intention.id;
 		setEditing(intention);
@@ -46,7 +50,7 @@ export default function IntentionScreen() {
 
 	return (
 		<>
-			<Text>{focusFromStorage.title}</Text>
+			<Text>{focus.title}</Text>
 			<KeyboardAwareScrollView contentInsetAdjustmentBehavior="automatic">
 				{focus.intentions.map((intention, idx) => {
 					const isEditing = intention.id === editing?.id;
