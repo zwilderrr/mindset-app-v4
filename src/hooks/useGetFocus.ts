@@ -5,8 +5,8 @@ import { useRoute } from "@react-navigation/native";
 
 /**
  * Rendering and editing the focus from storage directly is slow and janky.
- * This hook allows for state to manage the Focus (making it slow and not janky),
- * while also updating the storage on each change
+ * This hook allows for state to manage the Focus (making it fast and not janky),
+ * while also updating the storage on each change.
  */
 export function useFocus() {
 	const {
@@ -20,7 +20,6 @@ export function useFocus() {
 	const [focus, setFocus] = useState(focusFromStorage);
 
 	useEffect(() => {
-		console.log("there has been a change");
 		setFocus(focusFromStorage);
 	}, [JSON.stringify(focusFromStorage)]);
 

@@ -66,7 +66,7 @@ export default function IntentionScreen() {
 			<ActionBar
 				actions={[
 					{
-						label: "Add",
+						label: "Add focus",
 						iconSource: drag,
 						iconStyle: { height: 26, resizeMode: "contain" },
 						onPress: handlePressAdd,

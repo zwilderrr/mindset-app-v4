@@ -1,4 +1,5 @@
 import {
+	ActionBar,
 	Button,
 	Card,
 	Colors,
@@ -10,12 +11,18 @@ import {
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Modal } from "@app/components/Modal";
+import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useMindset } from "@app/providers/MindsetProvider";
+import { useState } from "react";
+
+const drag = require("@app/assets/drag.png");
 
 export default function FocusScreen() {
 	const { navigate } = useNavigation();
 	const { focuses } = useMindset();
+	const [modalOpen, setModalOpen] = useState(false);
 
 	return (
 		<>
@@ -62,6 +69,27 @@ export default function FocusScreen() {
 					);
 				})}
 			</KeyboardAwareScrollView>
+
+			<Modal
+				title="Add Focus"
+				modalOpen={modalOpen}
+				onCancel={() => setModalOpen(false)}
+				onDone={() => setModalOpen(false)}
+			>
+				<Text>hey</Text>
+			</Modal>
+
+			<ActionBar
+				actions={[
+					{
+						label: "Add focus",
+						iconStyle: { height: 26, resizeMode: "contain" },
+						onPress: () => setModalOpen(true),
+					},
+					{ label: "" },
+				]}
+			/>
+
 			<TestButtons />
 		</>
 	);
@@ -71,7 +99,7 @@ export function TestButtons() {
 	const { clearData, seedData } = useMindset();
 
 	return (
-		<View absH absB height={100}>
+		<View absH absB height={150} style={{ zIndex: -1 }}>
 			<TouchableOpacity onPress={clearData} style={{ marginBottom: 10 }}>
 				<Text>Clear data</Text>
 			</TouchableOpacity>
