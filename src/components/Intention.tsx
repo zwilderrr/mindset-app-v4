@@ -8,7 +8,9 @@ import {
 	View,
 } from "react-native-ui-lib";
 import { FocusType, IntentionType } from "@app/types";
-import { Switch as RNSwitch, StyleSheet } from "react-native";
+import { Switch as RNSwitch, TextInput as RNTextInput } from "react-native";
+
+import { useRef } from "react";
 
 type IntentionProps = {
 	intention: IntentionType;
@@ -27,6 +29,8 @@ export function Intention({
 	handleOnPressIn,
 	setFocus,
 }: IntentionProps) {
+	const avatarRef = useRef(null);
+
 	return (
 		<Drawer
 			key={intention.id}
@@ -52,10 +56,24 @@ export function Intention({
 				<TouchableOpacity activeOpacity={1} row>
 					<Avatar
 						label={intention.emoji || intention.title[0]}
-						// update this logic to trigger a hidden text field
-						// onPress={() => handlePressIntention(intention)}
+						onPress={() => {
+							avatarRef?.current?.focus();
+							handleOnPressIn(intention);
+						}}
 					/>
-					{/* <HiddenTextField /> */}
+					{/* RNUI Lib's TextField hides the other TextField's when `display: "none"`  */}
+					<RNTextInput
+						ref={avatarRef}
+						style={{ display: "none" }}
+						value=""
+						onChangeText={nextEmoji => {
+							setFocus(f => {
+								const nextFocus = { ...f };
+								nextFocus.intentions[idx].emoji = nextEmoji;
+								return nextFocus;
+							});
+						}}
+					/>
 					<View>
 						{/* intention */}
 						<TextField
