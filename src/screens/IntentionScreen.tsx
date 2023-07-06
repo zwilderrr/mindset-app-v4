@@ -5,16 +5,15 @@ import { Intention } from "@app/components/Intention";
 import { IntentionType } from "@app/types";
 import { Keyboard } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useGetFocus } from "@app/hooks/useGetFocus";
+import { useFocus } from "@app/hooks/useGetFocus";
 import { useMindset } from "@app/providers/MindsetProvider";
 
 const drag = require("@app/assets/drag.png");
 
 export default function IntentionScreen() {
-	const focusFromStorage = useGetFocus();
+	const { focus, setFocus } = useFocus();
 	const [editing, setEditing] = useState<IntentionType | undefined>();
 	const idRef = useRef("");
-	const [focus, setFocus] = useState(focusFromStorage);
 
 	const { addIntention, updateFocus } = useMindset();
 
@@ -35,17 +34,13 @@ export default function IntentionScreen() {
 		updateFocus(focus);
 	}, [JSON.stringify(focus)]);
 
-	useEffect(() => {
-		setFocus(focusFromStorage);
-	}, [JSON.stringify(focusFromStorage)]);
-
 	function handleOnPressIn(intention: IntentionType) {
 		idRef.current = intention.id;
 		setEditing(intention);
 	}
 
 	function handlePressAdd() {
-		addIntention(focusFromStorage);
+		addIntention(focus);
 	}
 
 	return (
