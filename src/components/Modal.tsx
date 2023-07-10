@@ -2,7 +2,7 @@ import { Modal as RNUIModal, Text, View } from "react-native-ui-lib";
 
 import { SafeAreaView } from "react-native";
 
-type ModalProps = {
+export type ModalProps = {
 	title: string;
 	doneLabel?: string;
 	cancelLabel?: string;

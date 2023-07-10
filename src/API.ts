@@ -19,6 +19,7 @@ async function getItem<T>(key: string): Promise<T | null> {
 async function getMulti<T>(keys: string[]): Promise<T[]> {
 	const items = await AsyncStorage.multiGet(keys);
 	const obj = Object.fromEntries(items);
+	console.log({ obj });
 	return keys.map(k => {
 		const val = obj[k];
 		if (val === null) {
@@ -51,12 +52,21 @@ export async function getFocuses() {
 }
 
 export async function updateFocus(focus: FocusType) {
+	console.log(focus);
 	await setItem<FocusType>(focus.id, focus);
 }
 
 export async function addFocus(focus: FocusType) {
-	const focusOrder = await getFocusOrder();
-	focusOrder.push(focus.id);
-	await updateFocusOrder(focusOrder);
+	const nextFocusOrder = await getFocusOrder();
+	nextFocusOrder.push(focus.id);
+	await updateFocusOrder(nextFocusOrder);
 	await updateFocus(focus);
+}
+
+export async function deleteFocus(focusId: string) {
+	await removeItem(focusId);
+
+	const focusOrder = await getFocusOrder();
+	const nextFocusOrder = focusOrder.filter(id => id !== focusId);
+	await updateFocusOrder(nextFocusOrder);
 }

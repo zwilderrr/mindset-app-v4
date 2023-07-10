@@ -9,8 +9,9 @@ import { SEED_DATA } from "@app/seedData";
 
 type MindsetContextType = {
 	focuses: FocusType[];
-	addFocus: () => Promise<void>;
+	addFocus: (focus: FocusType) => Promise<void>;
 	getFocus: (focusId: string) => FocusType;
+	deleteFocus: (focusId: string) => Promise<void>;
 	updateFocus: (focus: FocusType) => Promise<void>;
 	addIntention: (focus: FocusType) => Promise<void>;
 	seedData: () => Promise<void>;
@@ -65,6 +66,11 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		setUpdated(false);
 	}
 
+	async function deleteFocus(focusId: string) {
+		await API.deleteFocus(focusId);
+		setUpdated(false);
+	}
+
 	/** Intentions */
 	async function addIntention(focus: FocusType) {
 		focus.intentions.push(baseIntention());
@@ -76,13 +82,15 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 
 	async function clearData(shouldUpdate = true) {
 		const keys = await AsyncStorage.getAllKeys();
-		if (keys) {
-			// todo - cancel push notifications
-			await AsyncStorage.multiRemove(keys);
-		}
-		if (shouldUpdate) {
-			setUpdated(false);
-		}
+
+		console.log(keys);
+		// if (keys) {
+		// 	// todo - cancel push notifications
+		// 	await AsyncStorage.multiRemove(keys);
+		// }
+		// if (shouldUpdate) {
+		// 	setUpdated(false);
+		// }
 	}
 
 	async function seedData() {
@@ -100,6 +108,7 @@ export function MindsetProvider({ children }: { children: JSX.Element[] }) {
 		focuses,
 		addFocus,
 		getFocus,
+		deleteFocus,
 		addIntention,
 		seedData,
 		clearData,
